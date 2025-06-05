@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Calculadora de tipos Pokémon</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    /* ===== VARIABLES DE COLOR POR TIPO ===== */
+    :root {
+      --Normal: #cacaa6;
+      --Fire: #EE8130;
+      --Water: #6390F0;
+      --Electric: #F7D02C;
+      --Grass: #7AC74C;
+      --Ice: #96D9D6;
+      --Fighting: #C22E28;
+      --Poison: #A33EA1;
+      --Ground: #86713a;
+      --Flying: #A98FF3;
+      --Psychic: #F95587;
+      --Bug: #A6B91A;
+      --Rock: #97852d;
+      --Ghost: #735797;
+      --Dragon: #6F35FC;
+      --Dark: #2e2727;
+      --Steel: #B7B7CE;
+      --Fairy: #f5b3d4;
+    }
+
+    /* ===== RESET & BODY ===== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    body {
+      font-family: Poppins, sans-serif;
+      background: #0f172a;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 26px;
+      padding: 28px
+    }
+
+    h1 {
+      font-size: 34px;
+      text-align: center
+    }
+
+    h1{font-family:'Press Start 2P',cursive;font-size:28px;text-align:center;letter-spacing:1px}
+    h2{font-family:'Press Start 2P',cursive;font-size:16px;margin-bottom:4px}
+    h3{font-family:'Press Start 2P';font-size:12px;margin-bottom:4px}
+    p{font-family:'Press Start 2P';margin-bottom:4px}
+
+    /* ===== LAYOUT PRINCIPAL ===== */
+    .calculators {
+      display: flex;
+      gap: 28px;
+      flex-wrap: wrap;
+      justify-content: center;
+      width: 100%
+    }
+
+    .panel {
+      background: #1e293b;
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 0 20px #0006;
+      width: 360px;
+      flex: 1 1 340px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px
+    }
+
+    .panel h2 {
+      font-size: 22px
+    }
+
+    .panel p {
+      font-size: 14px;
+      color: #cbd5e1
+    }
+
+    .summary {
+      font-size: 15px;
+      font-weight: 600;
+      color: #38bdf8;
+      margin-top: 4px
+    }
+
+    /* ===== SELECTOR DE TIPOS ===== */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+      gap: 8px;
+      width: 100%
+    }
+
+    .type-btn {
+      border: 2px solid #fff4;
+      border-radius: 10px;
+      padding: 4px;
+      cursor: pointer;
+      background: #0f172a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform .15s, box-shadow .15s
+    }
+
+    .type-btn img {
+      width: 48px;
+      height: 48px;
+      pointer-events: none
+    }
+
+    .type-btn.selected {
+      transform: scale(1.07);
+      box-shadow: 0 0 0 3px #38bdf8 inset;
+      animation: pop .2s ease-out
+    }
+
+    .atk-btn.selected {
+      box-shadow: 0 0 0 3px #4ade80 inset
+    }
+
+    /* ===== LISTADOS ===== */
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      min-height: 36px;
+      list-style: none
+    }
+
+    li {
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-weight: 600;
+      color: #000;
+      animation: fadeIn .25s ease-out
+    }
+
+    li.x4 {
+      background: #dc2626
+    }
+
+    li.weak {
+      background: #ef4444
+    }
+
+    li.resist {
+      background: #facc15
+    }
+
+    li.quarter {
+      background: #fde047
+    }
+
+    li.immune {
+      background: #94a3b8
+    }
+
+    li.good {
+      background: #4ade80
+    }
+
+    /* ===== ANIMACIONES ===== */
+    @keyframes pop {
+      0% {
+        transform: scale(.9);
+      }
+
+      100% {
+        transform: scale(1.07);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Calculadora de tipos Pokémon</h1>
+
+  <div class="calculators">
+    <!-- =================== DEFENSA =================== -->
+    <section class="panel" id="defPanel">
+      <h2>Defensa</h2>
+      <p>Selecciona los <strong>tipos de tu Pokémon</strong>:</p>
+      <div id="defTypes" class="grid"></div>
+      <div id="defSummary" class="summary">—</div>
+      <h3>Debilidades ×4</h3>
+      <ul id="defQuadWeak">
+        <li>—</li>
+      </ul>
+      <h3>Debilidades ×2</h3>
+      <ul id="defWeak">
+        <li>—</li>
+      </ul>
+      <h3>Resistencias ×½</h3>
+      <ul id="defResist">
+        <li>—</li>
+      </ul>
+      <h3>Resistencias ×¼</h3>
+      <ul id="defQuadResist">
+        <li>—</li>
+      </ul>
+      <h3>Inmunidades ×0</h3>
+      <ul id="defImmune">
+        <li>—</li>
+      </ul>
+    </section>
+
+    <!-- =================== OFENSA =================== -->
+    <section class="panel" id="atkPanel">
+      <h2>Ataque</h2>
+      <p>Selecciona uno o más <strong>tipos de ataque</strong>:</p>
+      <div id="atkTypes" class="grid"></div>
+      <div id="atkSummary" class="summary">—</div>
+      <h3>Super‑efectivo ×2</h3>
+      <ul id="atkStrong">
+        <li>—</li>
+      </ul>
+      <h3>Objetivos que resisten ×½</h3>
+      <ul id="atkResist">
+        <li>—</li>
+      </ul>
+      <h3>Objetivos inmunes ×0</h3>
+      <ul id="atkImmune">
+        <li>—</li>
+      </ul>
+    </section>
+  </div>
+
+  <script>
+    /* ===== DATA ===== */
+    const types = ["Normal", "Fire", "Water", "Electric", "Grass", "Ice", "Fighting", "Poison", "Ground", "Flying", "Psychic", "Bug", "Rock", "Ghost", "Dragon", "Dark", "Steel", "Fairy"];
+    const typeColors = Object.fromEntries(types.map(t => [t, `var(--${t})`]));
+    const iconPath = t => `img/types/${t.toLowerCase()}.png`;
+
+    const chart = {
+      Normal: { Fighting: 2, Ghost: 0 },
+      Fire: { Water: 2, Ground: 2, Rock: 2, Fire: 0.5, Grass: 0.5, Ice: 0.5, Bug: 0.5, Fairy: 0.5, Steel: 0.5 },
+      Water: { Electric: 2, Grass: 2, Fire: 0.5, Water: 0.5, Ice: 0.5, Steel: 0.5 },
+      Electric: { Ground: 2, Electric: 0.5, Flying: 0.5, Steel: 0.5 },
+      Grass: { Fire: 2, Ice: 2, Poison: 2, Flying: 2, Bug: 2, Water: 0.5, Electric: 0.5, Grass: 0.5, Ground: 0.5 },
+      Ice: { Fire: 2, Fighting: 2, Rock: 2, Steel: 2, Ice: 0.5 },
+      Fighting: { Flying: 2, Psychic: 2, Fairy: 2, Bug: 0.5, Rock: 0.5, Dark: 0.5 },
+      Poison: { Ground: 2, Psychic: 2, Grass: 0.5, Fighting: 0.5, Poison: 0.5, Bug: 0.5, Fairy: 0.5 },
+      Ground: { Water: 2, Grass: 2, Ice: 2, Electric: 0, Poison: 0.5, Rock: 0.5 },
+      Flying: { Electric: 2, Ice: 2, Rock: 2, Grass: 0.5, Fighting: 0.5, Bug: 0.5, Ground: 0 },
+      Psychic: { Bug: 2, Ghost: 2, Dark: 2, Fighting: 0.5, Psychic: 0.5 },
+      Bug: { Fire: 2, Flying: 2, Rock: 2, Grass: 0.5, Fighting: 0.5, Ground: 0.5 },
+      Rock: { Water: 2, Grass: 2, Fighting: 2, Ground: 2, Steel: 2, Normal: 0.5, Fire: 0.5, Poison: 0.5, Flying: 0.5 },
+      Ghost: { Ghost: 2, Dark: 2, Poison: 0.5, Bug: 0.5, Normal: 0, Fighting: 0 },
+      Dragon: { Ice: 2, Dragon: 2, Fairy: 2, Fire: 0.5, Water: 0.5, Electric: 0.5, Grass: 0.5 },
+      Dark: { Fighting: 2, Bug: 2, Fairy: 2, Ghost: 0.5, Dark: 0.5, Psychic: 0 },
+      Steel: { Fire: 2, Fighting: 2, Ground: 2, Normal: 0.5, Grass: 0.5, Ice: 0.5, Flying: 0.5, Psychic: 0.5, Bug: 0.5, Rock: 0.5, Dragon: 0.5, Steel: 0.5, Fairy: 0.5, Poison: 0 },
+      Fairy: { Poison: 2, Steel: 2, Fighting: 0.5, Bug: 0.5, Dark: 0.5, Dragon: 0 }
+    };
+    /* ===== ELEMENTOS ===== */
+    const get = id => document.getElementById(id);
+    const defDiv = get('defTypes'); const atkDiv = get('atkTypes');
+    const defQuadWeak = get('defQuadWeak'), defWeak = get('defWeak'), defRes = get('defResist'), defQuadRes = get('defQuadResist'), defImm = get('defImmune');
+    const atkQuadStrong = get('atkQuadStrong'), atkStrong = get('atkStrong'), atkRes = get('atkResist'), atkQuarter = get('atkQuarter'), atkImm = get('atkImmune');
+
+    /* ===== BOTONES ===== */
+    const makeBtn = (t, isAtk) => {
+      const div = document.createElement('div'); div.className = 'type-btn' + (isAtk ? ' atk-btn' : ''); div.dataset.type = t; div.style.background = typeColors[t];
+      const img = document.createElement('img'); img.src = iconPath(t); img.alt = t; img.onerror = () => { img.remove(); div.textContent = t; }; div.appendChild(img);
+      div.onclick = () => { div.classList.toggle('selected'); isAtk ? updateOffense() : updateDefense(); }; return div;
+    };
+    types.forEach(t => { defDiv.appendChild(makeBtn(t, false)); atkDiv.appendChild(makeBtn(t, true)); });
+
+    /* ===== UTIL ===== */
+    const render = (ul, arr, cls) => ul.innerHTML = arr.length ? arr.map(t => `<li class="${cls}">${t}</li>`).join('') : '<li>—</li>';
+
+    /* ===== DEFENSA ===== */
+    function updateDefense() {
+      const sel = [...defDiv.querySelectorAll('.selected')].map(b => b.dataset.type);
+      if (!sel.length) { [defQuadWeak, defWeak, defQuadRes, defRes, defImm].forEach(u => u.innerHTML = '<li>—</li>'); return; }
+      const mult = Object.fromEntries(types.map(t => [t, 1]));
+      sel.forEach(def => { const m = chart[def] || {}; types.forEach(atk => mult[atk] *= (m[atk] ?? 1)); });
+      const qw = [], w = [], r = [], qr = [], im = [];
+      for (const [atk, m] of Object.entries(mult)) {
+        if (m === 0) im.push(atk); else if (m === 4) qw.push(atk); else if (m > 1) w.push(atk); else if (m === 0.25) qr.push(atk); else if (m < 1) r.push(atk);
+      }
+      render(defQuadWeak, qw, 'x4'); render(defWeak, w, 'weak'); render(defQuadRes, qr, 'quarter'); render(defRes, r, 'resist'); render(defImm, im, 'immune');
+    }
+
+    /* ===== OFENSA ===== */
+    function updateOffense() {
+      const selAtk = [...atkDiv.querySelectorAll('.selected')].map(b => b.dataset.type);
+      if (!selAtk.length) { [atkStrong, atkRes, atkImm].forEach(u => u.innerHTML = '<li>—</li>'); return; }
+      const best = {}; types.forEach(def => best[def] = Math.max(...selAtk.map(atk => (chart[def] && chart[def][atk]) ?? 1)));
+      const qS = [], s = [], r = [], qR = [], im = [];
+      for (const [def, m] of Object.entries(best)) {
+        if (m === 0) im.push(def); else if (m === 4) qS.push(def); else if (m > 1) s.push(def); else if (m === 0.25) qR.push(def); else if (m < 1) r.push(def);
+      }
+      render(atkStrong, s, 'good'); render(atkRes, r, 'resist'); render(atkImm, im, 'immune');
+    }
+  </script>
+</body>
+</html>
