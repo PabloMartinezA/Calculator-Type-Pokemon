@@ -6,28 +6,28 @@
   <title>Calculadora de tipos Pokémon</title>
   
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=devHielo-width, initial-scale=1">
   <style>
     /* ===== VARIABLES DE COLOR POR TIPO ===== */
     :root {
       --Normal: #cacaa6;
-      --Fire: #EE8130;
-      --Water: #6390F0;
-      --Electric: #F7D02C;
-      --Grass: #7AC74C;
-      --Ice: #96D9D6;
-      --Fighting: #C22E28;
-      --Poison: #A33EA1;
-      --Ground: #86713a;
-      --Flying: #A98FF3;
-      --Psychic: #F95587;
-      --Bug: #A6B91A;
-      --Rock: #97852d;
-      --Ghost: #735797;
+      --Fuego: #EE8130;
+      --Agua: #6390F0;
+      --Electrico: #F7D02C;
+      --Planta: #7AC74C;
+      --Hielo: #96D9D6;
+      --Lucha: #C22E28;
+      --Veneno: #A33EA1;
+      --Tierra: #86713a;
+      --Volador: #A98FF3;
+      --Psiquico: #F95587;
+      --Bicho: #A6B91A;
+      --Roca: #97852d;
+      --Fantasma: #735797;
       --Dragon: #6F35FC;
-      --Dark: #2e2727;
-      --Steel: #B7B7CE;
-      --Fairy: #f5b3d4;
+      --Oscuro: #2e2727;
+      --Acero: #B7B7CE;
+      --Hada: #f5b3d4;
     }
 
     /* ===== RESET & BODY ===== */
@@ -252,29 +252,29 @@
 
   <script>
     /* ===== DATA ===== */
-    const types = ["Normal", "Fire", "Water", "Electric", "Grass", "Ice", "Fighting", "Poison", "Ground", "Flying", "Psychic", "Bug", "Rock", "Ghost", "Dragon", "Dark", "Steel", "Fairy"];
+    const types = ["Normal", "Fuego", "Agua", "Electrico", "Planta", "Hielo", "Lucha", "Veneno", "Tierra", "Volador", "Psiquico", "Bicho", "Roca", "Fantasma", "Dragon", "Oscuro", "Acero", "Hada"];
     const typeColors = Object.fromEntries(types.map(t => [t, `var(--${t})`]));
     const iconPath = t => `img/types/${t.toLowerCase()}.png`;
 
     const chart = {
-      Normal: { Fighting: 2, Ghost: 0 },
-      Fire: { Water: 2, Ground: 2, Rock: 2, Fire: 0.5, Grass: 0.5, Ice: 0.5, Bug: 0.5, Fairy: 0.5, Steel: 0.5 },
-      Water: { Electric: 2, Grass: 2, Fire: 0.5, Water: 0.5, Ice: 0.5, Steel: 0.5 },
-      Electric: { Ground: 2, Electric: 0.5, Flying: 0.5, Steel: 0.5 },
-      Grass: { Fire: 2, Ice: 2, Poison: 2, Flying: 2, Bug: 2, Water: 0.5, Electric: 0.5, Grass: 0.5, Ground: 0.5 },
-      Ice: { Fire: 2, Fighting: 2, Rock: 2, Steel: 2, Ice: 0.5 },
-      Fighting: { Flying: 2, Psychic: 2, Fairy: 2, Bug: 0.5, Rock: 0.5, Dark: 0.5 },
-      Poison: { Ground: 2, Psychic: 2, Grass: 0.5, Fighting: 0.5, Poison: 0.5, Bug: 0.5, Fairy: 0.5 },
-      Ground: { Water: 2, Grass: 2, Ice: 2, Electric: 0, Poison: 0.5, Rock: 0.5 },
-      Flying: { Electric: 2, Ice: 2, Rock: 2, Grass: 0.5, Fighting: 0.5, Bug: 0.5, Ground: 0 },
-      Psychic: { Bug: 2, Ghost: 2, Dark: 2, Fighting: 0.5, Psychic: 0.5 },
-      Bug: { Fire: 2, Flying: 2, Rock: 2, Grass: 0.5, Fighting: 0.5, Ground: 0.5 },
-      Rock: { Water: 2, Grass: 2, Fighting: 2, Ground: 2, Steel: 2, Normal: 0.5, Fire: 0.5, Poison: 0.5, Flying: 0.5 },
-      Ghost: { Ghost: 2, Dark: 2, Poison: 0.5, Bug: 0.5, Normal: 0, Fighting: 0 },
-      Dragon: { Ice: 2, Dragon: 2, Fairy: 2, Fire: 0.5, Water: 0.5, Electric: 0.5, Grass: 0.5 },
-      Dark: { Fighting: 2, Bug: 2, Fairy: 2, Ghost: 0.5, Dark: 0.5, Psychic: 0 },
-      Steel: { Fire: 2, Fighting: 2, Ground: 2, Normal: 0.5, Grass: 0.5, Ice: 0.5, Flying: 0.5, Psychic: 0.5, Bug: 0.5, Rock: 0.5, Dragon: 0.5, Steel: 0.5, Fairy: 0.5, Poison: 0 },
-      Fairy: { Poison: 2, Steel: 2, Fighting: 0.5, Bug: 0.5, Dark: 0.5, Dragon: 0 }
+      Normal: { Lucha: 2, Fantasma: 0 },
+      Fuego: { Agua: 2, Tierra: 2, Roca: 2, Fuego: 0.5, Planta: 0.5, Hielo: 0.5, Bicho: 0.5, Hada: 0.5, Acero: 0.5 },
+      Agua: { Electrico: 2, Planta: 2, Fuego: 0.5, Agua: 0.5, Hielo: 0.5, Acero: 0.5 },
+      Electrico: { Tierra: 2, Electrico: 0.5, Volador: 0.5, Acero: 0.5 },
+      Planta: { Fuego: 2, Hielo: 2, Veneno: 2, Volador: 2, Bicho: 2, Agua: 0.5, Electrico: 0.5, Planta: 0.5, Tierra: 0.5 },
+      Hielo: { Fuego: 2, Lucha: 2, Roca: 2, Acero: 2, Hielo: 0.5 },
+      Lucha: { Volador: 2, Psiquico: 2, Hada: 2, Bicho: 0.5, Roca: 0.5, Oscuro: 0.5 },
+      Veneno: { Tierra: 2, Psiquico: 2, Planta: 0.5, Lucha: 0.5, Veneno: 0.5, Bicho: 0.5, Hada: 0.5 },
+      Tierra: { Agua: 2, Planta: 2, Hielo: 2, Electrico: 0, Veneno: 0.5, Roca: 0.5 },
+      Volador: { Electrico: 2, Hielo: 2, Roca: 2, Planta: 0.5, Lucha: 0.5, Bicho: 0.5, Tierra: 0 },
+      Psiquico: { Bicho: 2, Fantasma: 2, Oscuro: 2, Lucha: 0.5, Psiquico: 0.5 },
+      Bicho: { Fuego: 2, Volador: 2, Roca: 2, Planta: 0.5, Lucha: 0.5, Tierra: 0.5 },
+      Roca: { Agua: 2, Planta: 2, Lucha: 2, Tierra: 2, Acero: 2, Normal: 0.5, Fuego: 0.5, Veneno: 0.5, Volador: 0.5 },
+      Fantasma: { Fantasma: 2, Oscuro: 2, Veneno: 0.5, Bicho: 0.5, Normal: 0, Lucha: 0 },
+      Dragon: { Hielo: 2, Dragon: 2, Hada: 2, Fuego: 0.5, Agua: 0.5, Electrico: 0.5, Planta: 0.5 },
+      Oscuro: { Lucha: 2, Bicho: 2, Hada: 2, Fantasma: 0.5, Oscuro: 0.5, Psiquico: 0 },
+      Acero: { Fuego: 2, Lucha: 2, Tierra: 2, Normal: 0.5, Planta: 0.5, Hielo: 0.5, Volador: 0.5, Psiquico: 0.5, Bicho: 0.5, Roca: 0.5, Dragon: 0.5, Acero: 0.5, Hada: 0.5, Veneno: 0 },
+      Hada: { Veneno: 2, Acero: 2, Lucha: 0.5, Bicho: 0.5, Oscuro: 0.5, Dragon: 0 }
     };
     /* ===== ELEMENTOS ===== */
     const get = id => document.getElementById(id);
@@ -284,7 +284,7 @@
 
     /* ===== BOTONES ===== */
     const makeBtn = (t, isAtk) => {
-      const div = document.createElement('div'); div.className = 'type-btn' + (isAtk ? ' atk-btn' : ''); div.dataset.type = t; div.style.background = typeColors[t];
+      const div = document.createElement('div'); div.className = 'type-btn' + (isAtk ? ' atk-btn' : ''); div.dataset.type = t; div.style.backTierra = typeColors[t];
       const img = document.createElement('img'); img.src = iconPath(t); img.alt = t; img.onerror = () => { img.remove(); div.textContent = t; }; div.appendChild(img);
       div.onclick = () => { div.classList.toggle('selected'); isAtk ? updateOffense() : updateDefense(); }; return div;
     };
